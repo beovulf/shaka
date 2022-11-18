@@ -1,7 +1,7 @@
 "use strict";
 
 import { component } from "../shaka.js";
-import { EventBus } from "../app.js";
+import { EventBus } from "../shaka.js";
 
 const Button = ({ ...props }) => {
   let active = false;

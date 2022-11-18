@@ -71,4 +71,16 @@ function bus() {
   };
 }
 
-export { init, component, bus };
+const EventBus = new bus();
+
+var store = {};
+
+EventBus.$on("store", (params) => {
+  console.log(params);
+  store = {
+    ...store,
+    ...params,
+  };
+});
+
+export { init, component, bus, EventBus, store };

@@ -2,7 +2,7 @@
 
 import { component } from "../shaka.js";
 import { Button, Image } from "./index.js";
-import { EventBus } from "../app.js";
+import { EventBus, store } from "../shaka.js";
 
 const Title = component({ type: "h1", text: "Hero text", style: {} });
 
@@ -18,6 +18,18 @@ setTimeout(() => {
   });
 }, 0);
 
+EventBus.$emit("store", {
+  counter: 0,
+});
+
+function handleClick() {
+  EventBus.$emit("store", {
+    counter: store.counter + 1,
+  });
+
+  console.log("updated", store.counter);
+}
+
 const Hero = ({ ...props }) =>
   component({
     type: "div",
@@ -28,6 +40,8 @@ const Hero = ({ ...props }) =>
         alt: "Landscape photo",
       }),
       Button({ text: "Click me", classNames: "button" }),
+      component({ type: "p", text: store?.counter }),
+      component({ type: "button", text: "update store", onClick: handleClick }),
     ],
   });
 
