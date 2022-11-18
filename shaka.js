@@ -10,14 +10,27 @@ function init(id, components) {
   wrapper.replaceChildren(fragment);
 }
 
-function component(type = "div", text, inner) {
+function component({
+  type = "div",
+  text,
+  children,
+  src,
+  alt,
+  classNames,
+  onClick,
+}) {
   const element = document.createElement(type);
 
-  if (!!inner && inner.length) {
+  !!src && (element.src = src);
+  !!alt && (element.alt = alt);
+  !!classNames && classNames.length && element.classList.add(classNames);
+  !!onClick && element.addEventListener("click", onClick);
+
+  if (!!children && children.length) {
     const fragment = document.createDocumentFragment();
 
-    for (let i = 0; i < inner.length; i++) {
-      fragment.appendChild(inner[i]);
+    for (let i = 0; i < children.length; i++) {
+      fragment.appendChild(children[i]);
     }
     element.appendChild(fragment);
   } else {
