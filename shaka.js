@@ -40,4 +40,35 @@ function component({
   return element;
 }
 
-export { init, component };
+function bus() {
+  var topics = {};
+
+  this.$on = function (eventName, listener) {
+    if (!topics[eventName] || !topics[eventName].length) {
+      topics[eventName] = [];
+    }
+    topics[eventName].push(listener);
+  };
+
+  this.$emit = function (eventName, params) {
+    if (!topics[eventName] || !topics[eventName].length) return;
+
+    for (let i = 0; i < topics[eventName].length; i++) {
+      const listener = topics[eventName][i];
+
+      listener(params || {});
+    }
+  };
+
+  this.$remove = function (eventName, listener) {
+    if (!topics[eventName] || !topics[eventName].length) return;
+
+    delete topics[listener];
+  };
+
+  this.$get = function (eventName) {
+    return topics[eventName];
+  };
+}
+
+export { init, component, bus };

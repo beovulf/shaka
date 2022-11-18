@@ -1,7 +1,9 @@
 "use strict";
 
-import { init, component } from "./shaka.js";
+import { init, component, bus } from "./shaka.js";
 import { Hero } from "./components/index.js";
+
+export const EventBus = new bus();
 
 init("main", [
   component({ type: "h1", text: "1" }),
